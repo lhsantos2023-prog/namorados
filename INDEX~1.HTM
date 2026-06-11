@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Você, Baby ❤️</title>
+<meta name="description" content="Feliz Dia dos Namorados">
+<style>
+  :root{
+    --bg:#0d0407;
+    --bg2:#1a060d;
+    --red:#e63956;
+    --pink:#ff8fab;
+    --gold:#e8b4bc;
+    --text:#f5e6ea;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(ellipse at 50% 0%, var(--bg2) 0%, var(--bg) 60%);
+    color:var(--text);
+    font-family:Georgia,'Times New Roman',serif;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+  /* ---------- corações flutuantes ---------- */
+  .heart-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .heart-bg span{
+    position:absolute;bottom:-8vh;
+    color:var(--red);opacity:0;
+    animation:floatUp linear infinite;
+    text-shadow:0 0 18px rgba(230,57,86,.55);
+  }
+  @keyframes floatUp{
+    0%{transform:translateY(0) rotate(0deg);opacity:0}
+    12%{opacity:.45}
+    85%{opacity:.3}
+    100%{transform:translateY(-115vh) rotate(28deg);opacity:0}
+  }
+  /* ---------- tela inicial ---------- */
+  #intro{
+    position:fixed;inset:0;z-index:50;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:24px;
+    background:radial-gradient(ellipse at 50% 30%, var(--bg2) 0%, var(--bg) 70%);
+    transition:opacity 1.2s ease, visibility 1.2s;
+  }
+  #intro.hidden{opacity:0;visibility:hidden}
+  #intro .date-badge{
+    letter-spacing:.35em;text-transform:uppercase;font-size:.72rem;
+    color:var(--gold);margin-bottom:22px;
+  }
+  #intro h1{
+    font-size:clamp(2rem,7vw,3.6rem);font-weight:normal;
+    line-height:1.25;margin-bottom:10px;
+  }
+  #intro h1 em{font-style:italic;color:var(--pink)}
+  #intro p{color:var(--gold);font-style:italic;margin-bottom:42px;font-size:1.05rem}
+  #btnSurpresa{
+    font-family:inherit;font-size:1.1rem;color:#fff;cursor:pointer;
+    background:linear-gradient(135deg,var(--red),#b3123a);
+    border:none;border-radius:999px;padding:17px 44px;
+    box-shadow:0 0 32px rgba(230,57,86,.5);
+    animation:pulse 1.8s ease-in-out infinite;
+    transition:transform .2s;
+  }
+  #btnSurpresa:active{transform:scale(.95)}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 22px rgba(230,57,86,.4);transform:scale(1)}
+    50%{box-shadow:0 0 46px rgba(230,57,86,.75);transform:scale(1.045)}
+  }
+  /* ---------- conteúdo ---------- */
+  #conteudo{position:relative;z-index:1;display:none}
+  #conteudo.show{display:block;animation:fadeIn 1.4s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  section{max-width:680px;margin:0 auto;padding:70px 26px}
+  .divider{display:flex;align-items:center;gap:14px;justify-content:center;margin:8px auto 36px;color:var(--red)}
+  .divider::before,.divider::after{content:"";height:1px;width:70px;background:linear-gradient(90deg,transparent,var(--red))}
+  .divider::after{background:linear-gradient(90deg,var(--red),transparent)}
+  h2{
+    text-align:center;font-weight:normal;
+    font-size:clamp(1.5rem,5vw,2.1rem);letter-spacing:.04em;
+  }
+  /* carta */
+  .carta p{
+    font-size:1.12rem;line-height:1.95;margin-bottom:26px;
+    text-align:left;color:var(--text);
+  }
+  .carta .saudacao{font-style:italic;font-size:1.3rem;color:var(--pink)}
+  .carta .assinatura{
+    text-align:center;font-style:italic;font-size:1.35rem;
+    color:var(--pink);margin-top:42px;
+  }
+  /* contador */
+  .contador-wrap{text-align:center}
+  .contador{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:34px;
+  }
+  .unidade{
+    background:rgba(230,57,86,.08);
+    border:1px solid rgba(230,57,86,.35);
+    border-radius:14px;padding:18px 10px;min-width:86px;
+    backdrop-filter:blur(4px);
+  }
+  .unidade .num{font-size:2rem;color:var(--pink)}
+  .unidade .label{
+    font-size:.68rem;text-transform:uppercase;letter-spacing:.18em;
+    color:var(--gold);margin-top:6px;
+  }
+  .desde{margin-top:26px;font-style:italic;color:var(--gold)}
+  /* retrospectiva */
+  .retro-frame{
+    position:relative;max-width:480px;margin:40px auto 0;
+    border-radius:18px;overflow:hidden;
+    border:1px solid rgba(230,57,86,.3);
+    box-shadow:0 18px 60px rgba(0,0,0,.65), 0 0 40px rgba(230,57,86,.12);
+    aspect-ratio:3/4;background:#000;
+  }
+  .retro-frame img,.retro-frame video{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;transition:opacity 1.1s ease;
+  }
+  .retro-frame .ativa{opacity:1;animation:kenburns 5s ease-out forwards}
+  @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.07)}}
+  .retro-legenda{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;
+    padding:42px 18px 16px;text-align:center;font-style:italic;font-size:1rem;
+    background:linear-gradient(transparent,rgba(0,0,0,.78));
+    color:#fff;
+  }
+  .retro-controles{display:flex;justify-content:center;gap:18px;margin-top:22px}
+  .retro-controles button{
+    background:rgba(230,57,86,.12);border:1px solid rgba(230,57,86,.4);
+    color:var(--pink);border-radius:999px;padding:9px 22px;cursor:pointer;
+    font-family:inherit;font-size:.95rem;transition:background .2s;
+  }
+  .retro-controles button:hover{background:rgba(230,57,86,.28)}
+  .retro-progresso{text-align:center;margin-top:14px;color:var(--gold);font-size:.85rem;letter-spacing:.2em}
+  /* final */
+  .final{text-align:center;padding-bottom:130px}
+  .final p{
+    font-size:clamp(1.4rem,5vw,2rem);font-style:italic;line-height:1.6;color:var(--pink);
+  }
+  .final .coracao{font-size:3rem;display:block;margin-top:26px;animation:pulse 1.8s infinite}
+  /* player música */
+  #btnMusica{
+    position:fixed;bottom:20px;right:20px;z-index:60;display:none;
+    width:54px;height:54px;border-radius:50%;cursor:pointer;
+    background:linear-gradient(135deg,var(--red),#b3123a);
+    border:none;color:#fff;font-size:1.3rem;
+    box-shadow:0 4px 22px rgba(230,57,86,.5);
+  }
+  #btnMusica.tocando{animation:girar 4s linear infinite}
+  @keyframes girar{to{transform:rotate(360deg)}}
+  .musica-label{
+    position:fixed;bottom:30px;right:84px;z-index:60;display:none;
+    font-size:.78rem;color:var(--gold);font-style:italic;
+    background:rgba(13,4,7,.7);padding:5px 12px;border-radius:999px;
+  }
+</style>
+</head>
+<body>
+
+<div class="heart-bg" id="heartBg"></div>
+
+<!-- ===== TELA INICIAL ===== -->
+<div id="intro">
+  <div class="date-badge">12 · junho · dia dos namorados</div>
+  <h1>Tenho uma coisa<br><em>para te dizer...</em></h1>
+  <p>(é melhor você sentar antes 😏)</p>
+  <button id="btnSurpresa">Clica aqui, baby 💌</button>
+</div>
+
+<!-- ===== CONTEÚDO ===== -->
+<div id="conteudo">
+
+  <section class="carta">
+    <h2>Uma carta para você</h2>
+    <div class="divider">❦</div>
+    <p class="saudacao">Baby,</p>
+    <p>Passei a semana pensando em como transcrever o meu amor em palavras, mas acho que eu nunca conseguiria ser tão preciso. Mesmo assim, vou tentar.</p>
+    <p>Admiro a mulher incrível que você é: cheia de princípios e valores, leal com as pessoas que ama, determinada, divertida, muito organizada kkk e dona de uma energia que encanta qualquer ambiente.</p>
+    <p>E, claro, não posso deixar de dizer o quanto você é gostosa. Só de te olhar, eu já fico completamente louco por você.</p>
+    <p class="assinatura">Você é, sem dúvida, a minha pessoa ❤️</p>
+  </section>
+
+  <section class="contador-wrap">
+    <h2>Há quanto tempo eu sou seu</h2>
+    <div class="divider">❦</div>
+    <div class="contador">
+      <div class="unidade"><div class="num" id="cDias">0</div><div class="label">dias</div></div>
+      <div class="unidade"><div class="num" id="cHoras">0</div><div class="label">horas</div></div>
+      <div class="unidade"><div class="num" id="cMin">0</div><div class="label">minutos</div></div>
+      <div class="unidade"><div class="num" id="cSeg">0</div><div class="label">segundos</div></div>
+    </div>
+    <p class="desde">...e contando, desde 14 de março de 2025 🤍</p>
+  </section>
+
+  <section>
+    <h2>Nossa retrospectiva</h2>
+    <div class="divider">❦</div>
+    <div class="retro-frame" id="retroFrame"></div>
+    <div class="retro-controles">
+      <button id="btnAnterior">‹ anterior</button>
+      <button id="btnPausa">⏸ pausar</button>
+      <button id="btnProxima">próxima ›</button>
+    </div>
+    <div class="retro-progresso" id="retroProgresso"></div>
+  </section>
+
+  <section class="final">
+    <div class="divider">❦</div>
+    <p>De todas as pessoas, em todos os lugares,<br>eu escolheria você. Sempre você.</p>
+    <span class="coracao">❤️</span>
+  </section>
+
+</div>
+
+<span class="musica-label" id="musicaLabel">♪ Afrodite — Delacruz</span>
+<button id="btnMusica" title="música">▶</button>
+<audio id="musica" src="musica.mp3" loop preload="auto"></audio>
+
+<script>
+/* ================= CONFIGURAÇÃO =================
+   Edite aqui se quiser mudar legendas, datas etc. */
+const DATA_INICIO = new Date('2025-03-14T00:00:00');
+const SLIDES = [
+  // 21 fotos + 1 vídeo. Edite as legendas como quiser! "" = sem legenda
+  {src:'fotos/foto01.jpg', legenda:''},
+  {src:'fotos/foto02.jpg', legenda:''},
+  {src:'fotos/foto03.jpg', legenda:''},
+  {src:'fotos/foto04.jpg', legenda:''},
+  {src:'fotos/foto05.jpg', legenda:''},
+  {src:'fotos/foto06.jpg', legenda:''},
+  {src:'fotos/foto07.jpg', legenda:''},
+  {src:'fotos/foto08.jpg', legenda:''},
+  {src:'fotos/foto09.jpg', legenda:''},
+  {src:'fotos/foto10.jpg', legenda:''},
+  {src:'fotos/foto11.jpg', legenda:''},
+  {src:'fotos/foto12.jpg', legenda:''},
+  {src:'fotos/foto13.jpg', legenda:''},
+  {src:'fotos/foto14.jpg', legenda:''},
+  {src:'fotos/foto15.jpg', legenda:''},
+  {src:'fotos/foto16.jpg', legenda:''},
+  {src:'fotos/foto17.jpg', legenda:''},
+  {src:'fotos/foto18.jpg', legenda:''},
+  {src:'fotos/foto19.jpg', legenda:''},
+  {src:'fotos/foto20.jpg', legenda:''},
+  {src:'fotos/foto21.jpg', legenda:''},
+  {src:'fotos/video01.mp4', legenda:'', video:true},
+];
+const SEGUNDOS_POR_FOTO = 4.5;
+/* ================================================ */
+
+/* corações flutuantes */
+(function(){
+  const bg = document.getElementById('heartBg');
+  const simbolos = ['❤','♥','❥','💗'];
+  for(let i=0;i<26;i++){
+    const s = document.createElement('span');
+    s.textContent = simbolos[i % simbolos.length];
+    s.style.left = Math.random()*100 + 'vw';
+    s.style.fontSize = (12 + Math.random()*26) + 'px';
+    s.style.animationDuration = (9 + Math.random()*14) + 's';
+    s.style.animationDelay = (Math.random()*16) + 's';
+    bg.appendChild(s);
+  }
+})();
+
+/* explosão de corações ao clicar */
+function explodirCoracoes(x, y){
+  for(let i=0;i<22;i++){
+    const h = document.createElement('span');
+    h.textContent = '❤';
+    Object.assign(h.style,{
+      position:'fixed', left:x+'px', top:y+'px', zIndex:100,
+      color:'#e63956', fontSize:(14+Math.random()*22)+'px',
+      pointerEvents:'none', transition:'all 1.3s ease-out', opacity:1
+    });
+    document.body.appendChild(h);
+    requestAnimationFrame(()=>{
+      h.style.transform = `translate(${(Math.random()-0.5)*420}px, ${(Math.random()-0.7)*420}px) rotate(${(Math.random()-0.5)*180}deg)`;
+      h.style.opacity = 0;
+    });
+    setTimeout(()=>h.remove(), 1400);
+  }
+}
+
+/* botão surpresa */
+const intro = document.getElementById('intro');
+const conteudo = document.getElementById('conteudo');
+document.getElementById('btnSurpresa').addEventListener('click', function(e){
+  explodirCoracoes(e.clientX, e.clientY);
+  tocarMusica();
+  setTimeout(()=>{
+    intro.classList.add('hidden');
+    conteudo.classList.add('show');
+    window.scrollTo({top:0});
+    iniciarRetro();
+  }, 700);
+});
+
+/* contador */
+function atualizarContador(){
+  let diff = Math.max(0, Date.now() - DATA_INICIO.getTime());
+  const seg = Math.floor(diff/1000);
+  document.getElementById('cDias').textContent  = Math.floor(seg/86400).toLocaleString('pt-BR');
+  document.getElementById('cHoras').textContent = Math.floor(seg%86400/3600);
+  document.getElementById('cMin').textContent   = Math.floor(seg%3600/60);
+  document.getElementById('cSeg').textContent   = seg%60;
+}
+atualizarContador();
+setInterval(atualizarContador, 1000);
+
+/* retrospectiva */
+const frame = document.getElementById('retroFrame');
+const progresso = document.getElementById('retroProgresso');
+let elementos = [], atual = 0, timer = null, pausado = false;
+
+SLIDES.forEach((s, i)=>{
+  let el;
+  if(s.video){
+    el = document.createElement('video');
+    el.src = s.src; el.muted = true; el.playsInline = true; el.loop = true;
+  } else {
+    el = document.createElement('img');
+    el.src = s.src; el.alt = 'nossa foto'; el.loading = i < 3 ? 'eager' : 'lazy';
+  }
+  frame.appendChild(el);
+  elementos.push(el);
+});
+const legendaEl = document.createElement('div');
+legendaEl.className = 'retro-legenda';
+frame.appendChild(legendaEl);
+
+function mostrar(i){
+  atual = (i + SLIDES.length) % SLIDES.length;
+  elementos.forEach((el, j)=>{
+    el.classList.toggle('ativa', j === atual);
+    if(el.tagName === 'VIDEO'){ j === atual ? el.play().catch(()=>{}) : el.pause(); }
+  });
+  legendaEl.textContent = SLIDES[atual].legenda;
+  legendaEl.style.display = SLIDES[atual].legenda ? 'block' : 'none';
+  progresso.textContent = (atual+1) + ' / ' + SLIDES.length;
+}
+function agendar(){
+  clearTimeout(timer);
+  if(!pausado){
+    const dur = SLIDES[atual].video ? 8 : SEGUNDOS_POR_FOTO;
+    timer = setTimeout(()=>{ mostrar(atual+1); agendar(); }, dur*1000);
+  }
+}
+function iniciarRetro(){ mostrar(0); agendar(); }
+
+document.getElementById('btnProxima').onclick  = ()=>{ mostrar(atual+1); agendar(); };
+document.getElementById('btnAnterior').onclick = ()=>{ mostrar(atual-1); agendar(); };
+document.getElementById('btnPausa').onclick = function(){
+  pausado = !pausado;
+  this.textContent = pausado ? '▶ continuar' : '⏸ pausar';
+  agendar();
+};
+
+/* música */
+const musica = document.getElementById('musica');
+const btnMusica = document.getElementById('btnMusica');
+const musicaLabel = document.getElementById('musicaLabel');
+let temMusica = true;
+musica.addEventListener('error', ()=>{ temMusica = false; });
+
+function tocarMusica(){
+  if(!temMusica) return;
+  musica.volume = 0.65;
+  musica.play().then(()=>{
+    btnMusica.style.display = 'block';
+    musicaLabel.style.display = 'block';
+    btnMusica.textContent = '♪';
+    btnMusica.classList.add('tocando');
+    setTimeout(()=>{ musicaLabel.style.display='none'; }, 6000);
+  }).catch(()=>{});
+}
+btnMusica.addEventListener('click', ()=>{
+  if(musica.paused){
+    musica.play();
+    btnMusica.textContent = '♪';
+    btnMusica.classList.add('tocando');
+  } else {
+    musica.pause();
+    btnMusica.textContent = '▶';
+    btnMusica.classList.remove('tocando');
+  }
+});
+</script>
+</body>
+</html>
